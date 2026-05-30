@@ -1,0 +1,94 @@
+9.Identify the growth rates of the following code fragments using the Big-Oh notation: (6 marks) 
+	sum   0;
+for (int i = n; i > 0; i /= 2)
+for (int j = 0; j < i; j++)
+sum  sum +1;
+	sum  0;
+for (int i = 1; i < n; i *= 2)
+for (int j = 0; j < i; j++)
+sum  sum +1;
+
+a. sum ← 0;
+for (int i = n; i > 0; i /= 2)
+    for (int j = 0; j < i; j++)
+        sum ← sum + 1;
+Answer
+There are two loops:
+The outer loop changes i 
+The inner loop runs i times 
+Step 1: Analyze the outer loop
+The statement: i /= 2
+means i is divided by 2 every iteration.
+So, the values of i become: n, n/2, n/4, n/8……….
+The loop stops when i becomes 0.
+Since we keep halving the value, the outer loop runs about: log2 n times.
+Step 2: Analyze the inner loop
+The inner loop is:
+for (int j = 0; j < i; j++)
+This runs exactly i times for each outer iteration. 
+Step 3: Add total work
+Total operations: n+ n/2+ n/4+ n/8+……….
+This is a geometric series.
+For geometric series: n+ n/2+ n/4+ n/8+………. =2n
+So, the total work is proportional to:2n
+In Big-Oh notation, constants are ignored
+So, the growth rate is: O(n)
+b.sum ← 0;
+for (int i = 1; i < n; i *= 2)
+    for (int j = 0; j < i; j++)
+        sum ← sum + 1;
+Answer
+Step 1: Analyze the outer loop
+The outer loop is:
+for (int i = 1; i < n; i *= 2)
+here i is multiplied by 2 every iteration.
+Values of i become:1,2,4,8,16………
+These are powers of 2:20,21,22,23
+Suppose the loop runs k times. Then after k iterations:
+i=2k
+The loop stops when i ≥ n.
+So:2k>=n
+
+Taking log base 2 on both sides: 2k>=n
+                             k>=log2n
+	               
+
+		 
+Therefore, the number of iterations is approximately: log2n
+The statement: i *= 2
+means i doubles every iteration.
+Values of i become:1,2,4,8,16……………….
+The loop stops when i ≥ n.
+So, the outer loop runs about: log2n times.
+Step 2: Analyze the inner loop
+The inner loop runs i times.
+Step 3: Add total work
+Total operations: 1+2+4+8+……………+n
+This is another geometric series: 1+2+4+8+……………+n=2n-1
+Approximately:2n
+In Big-Oh notation, constants are ignored
+So, the growth rate is: O(n)
+10. Determine the growth rates for the following expressions using the Big-Oh notation: (6 marks) 
+	log (n2 + 1) / log(n) 
+	log (n400 + n2 + n + 90) 
+	n/2 + c
+1. log (n2 + 1) / log(n) 
+Answer 
+In log (n2 + 1) / log(n) dominant term
+log (n2 + 1) = log(n2) 
+Using log rules: log(n2) =2logn
+2logn/log(n)=2
+A constant has growth rate :O (1)
+
+2. log (n400 + n2 + n + 90) 
+Answer
+The dominant term inside the logarithm is:  n400
+using log rules
+ log(n400) = 400log(n)                                     
+Constant factors are ignored in Big-Oh notation
+So, the growth rate is: O (log n)
+3. n /2+c
+Answer
+In n /2+c the dominant term is: n
+Constant factors are ignored in Big-Oh notation
+So, the growth rate is: O(n)
