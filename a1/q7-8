@@ -1,0 +1,29 @@
+question 7	Determine the cumulative time complexity (Big-Oh) for the following expressions: (3 marks) 
+a.	O(n log(n)) + O(n) 
+Between O(n log(n)) and O(n), n log(n) grows Much Faster than n. O(n) becomes insignificant for n. Therefore, the cumulative time complexity is O(n log(n))
+
+b.	O(n) + O(log(n)) 
+The cumulative time complexity of O(n) + O(log(n)) is  O(n), since O(n) is significantly Bigger than O(log(n))
+
+c.	O(log(n)) + O(1)
+In this case, the cumulative time complexity is O(log n). because log n grows faster than constant 1.
+
+
+
+question 8	Given the following two algorithms, determine which one is better: (3 marks) 
+a.	for each n { 
+            		// some code here 
+} 
+Time to calculate [for each n] loop = n 
+Hence time complexity = O(n)
+
+b.	for each n { 
+for each n { 
+// some code here 
+}
+ }
+		Time to calculate outer [for each n] loop = n
+		Time to calculate inner [for each n] loop = n 
+		Total time = n x n =n^2
+		Time complexity = O(n^2)
+		O(n) is Much slower than O(n^2) giving algorithm A is more efficient as compared to algorithm B.
