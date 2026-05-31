@@ -1,0 +1,77 @@
+Question 3
+
+a) Prove that 6000n²2ⁿ / (n² + 3) is in O(2ⁿ)
+Since:
+n² + 3 ≥ n²
+Then:
+6000n²2ⁿ / (n² + 3) ≤ 6000n²2ⁿ / n²
+Cancelling n² gives:
+≤ 6000 × 2ⁿ
+Let:
+c = 6000
+n₀ = 1
+Therefore:
+6000n²2ⁿ / (n² + 3) ∈ O(2ⁿ)
+
+
+b) Prove that n! is in O(nⁿ)
+We know:
+n! = 1 × 2 × 3 × ... × n
+Every number is less than or equal to n.
+So:
+n! ≤ n × n × n × ... × n
+There are n terms, therefore:
+n! ≤ nⁿ
+Let:
+c = 1
+n₀ = 1
+Therefore:
+n! ∈ O(nⁿ)
+
+
+c) Prove that 2n + 10 is in O(n)
+For n ≥ 10:
+10 ≤ n
+Therefore:
+2n + 10 ≤ 2n + n
+2n + 10 ≤ 3n
+Let:
+c = 3
+n₀ = 10
+Therefore:
+2n + 10 ∈ O(n)
+
+
+d) Prove that 10 is in O(1)
+Since:
+10 ≤ 10 × 1
+Let:
+c = 10
+n₀ = 1
+Therefore:
+10 ∈ O(1)
+
+Question 4
+
+Algorithm A:
+8n²
+Algorithm B:
+64n log(n)
+
+To find when Algorithm A beats Algorithm B:
+8n² < 64n log(n)
+Divide both sides by 8n:
+n < 8log(n)
+Testing values (assuming log base 2):
+For n = 32:
+32 < 8log₂(32)
+32 < 40 ✓
+For n = 64:
+64 < 8log₂(64)
+64 < 48 ✗
+Therefore, the crossover point is between 32 and 64.
+Approximate value:
+n ≈ 43
+
+Algorithm A beats Algorithm B when n is approximately less than 43.
+For larger values of n, Algorithm B is more efficient because O(n log n) grows slower than O(n²).
