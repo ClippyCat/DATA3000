@@ -21,7 +21,7 @@ The statement: i /= 2
 means i is divided by 2 every iteration.
 So, the values of i become: n, n/2, n/4, n/8……….
 The loop stops when i becomes 0.
-Since we keep halving the value, the outer loop runs about: log2 n times.
+Since we keep having the value, the outer loop runs about: log2 n times.
 Step 2: Analyze the inner loop
 The inner loop is:
 for (int j = 0; j < i; j++)
@@ -65,7 +65,7 @@ The inner loop runs i times.
 Step 3: Add total work
 Total operations: 1+2+4+8+……………+n
 This is another geometric series: 1+2+4+8+……………+n=2n-1
-Approximately:2n
+So, the total work is proportional to:2n
 In Big-Oh notation, constants are ignored
 So, the growth rate is: O(n)
 10. Determine the growth rates for the following expressions using the Big-Oh notation: (6 marks) 
