@@ -1,0 +1,7 @@
+Question 11. For a problem of size n, algorithm A spends TA(n) = 5n log10(n) and algorithm B spends TB(n) = 25n microseconds. Which algorithm is better in the Big-Oh notation? At what problem size does one algorithm outperform the other?
+Answer:
+Time complexity for Algorithm A = O(n log(n)
+Time complexity for algorithm B = O(n)
+We know O(n) is better than O(n log(n)) in terms of time complexity, lower the time complexity better then algorithm. Therefore, Algorithm B is better than Algorithm A .
+For n > 100000, Algorithm B is faster
+And for n< 100000, Algorithm A may outperform Algorithm B 
