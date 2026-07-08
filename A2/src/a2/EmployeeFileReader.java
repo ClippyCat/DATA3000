@@ -51,14 +51,13 @@ public final class EmployeeFileReader {
     }
 
     /**
-     * Parses one line with format:
-     * ID Name HoursWorked HourlyRate DeductionProvince DeductionFederal
-     * EducationAllowance
+     * Parses one comma-separated line with format:
+     * ID,Name,HoursWorked,HourlyRate,DeductionProvince,DeductionFederal,EducationAllowance
      *
      * Name may contain spaces; numeric fields are read from the end.
      */
     private static Employee parseEmployee(String line) {
-        String[] parts = line.split("\\s+");
+        String[] parts = line.split("\\s*,\\s*");
 
         // At least: ID + Name + 5 numeric fields.
         if (parts.length < 7) {

@@ -1,15 +1,5 @@
 package a2;
 
-/**
- * Represents one employee record from the input file.
- *
- * Assumption for calcHourlySalary():
- * The assignment does not define an exact formula, so hourly salary is assumed
- * to be the net pay for the record after provincial and federal deductions,
- * including the education allowance:
- * (hoursWorked * hourlyRate + educationAllowance)
- * * (1 - (deductionProvince + deductionFederal))
- */
 public class Employee implements Comparable<Employee> {
     private final int id;
     private final String name;
