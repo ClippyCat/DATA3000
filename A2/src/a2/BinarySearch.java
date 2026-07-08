@@ -1,13 +1,16 @@
 package a2;
 
 /**
- * Utility class that performs a recursive binary search over an array of
- * {@link Employee} objects sorted in ascending order by name (for example,
- * the output of QuickSort).
+ * Utility class that performs a recursive binary search over an array sorted in
+ * ascending order by its natural ordering.
  *
- * Names are compared with {@link String#compareTo(String)}, which is
- * case-sensitive. The array passed in MUST be sorted with this same ordering,
- * otherwise the search result is undefined.
+ * The generic {@link #search(Comparable[], Comparable)} method works for any
+ * {@link Comparable} type. Because {@link Employee}'s natural ordering is by
+ * name (case-sensitive), searching an Employee array locates employees by name;
+ * a convenience overload accepts the name directly.
+ *
+ * The array passed in MUST already be sorted by the same natural ordering
+ * (for example the output of a name sort), otherwise the result is undefined.
  */
 public final class BinarySearch {
 
@@ -16,10 +19,29 @@ public final class BinarySearch {
     }
 
     /**
-     * Searches a name-sorted employee array for the given name.
+     * Searches a sorted array for an element equal, by natural ordering, to
+     * {@code target}.
      *
-     * If the name occurs more than once, the index of the FIRST occurrence is
-     * returned. If the name is not present, -1 is returned.
+     * If several elements are equal to the target, the index of the FIRST
+     * occurrence is returned. If none match, -1 is returned.
+     *
+     * @param array  array sorted ascending by natural ordering
+     * @param target the element to search for
+     * @param <T>    a Comparable element type
+     * @return index of the first matching element, or -1 if not found
+     */
+    public static <T extends Comparable<T>> int search(T[] array, T target) {
+        if (array == null || target == null) {
+            return -1;
+        }
+        return search(array, target, 0, array.length - 1);
+    }
+
+    /**
+     * Convenience overload: searches a name-sorted employee array for the given
+     * name. Builds a probe Employee whose only meaningful field is the name
+     * (Employee.compareTo compares by name only) and delegates to the generic
+     * search above.
      *
      * @param employees  array of employees sorted ascending by name
      * @param targetName the employee name to search for
@@ -29,35 +51,37 @@ public final class BinarySearch {
         if (employees == null || targetName == null) {
             return -1;
         }
-        return search(employees, targetName, 0, employees.length - 1);
+        Employee probe = new Employee(0, targetName, 0, 0, 0, 0, 0);
+        return search(employees, probe);
     }
 
     /**
      * Recursive helper that searches the inclusive index range [low, high].
      *
-     * @param employees  the name-sorted employee array
-     * @param targetName the name being searched for
-     * @param low        lowest index still in range
-     * @param high       highest index still in range
-     * @return index of the first matching employee within the range, or -1
+     * @param array  the sorted array
+     * @param target the element being searched for
+     * @param low    lowest index still in range
+     * @param high   highest index still in range
+     * @param <T>    a Comparable element type
+     * @return index of the first matching element within the range, or -1
      */
-    private static int search(Employee[] employees, String targetName, int low, int high) {
+    private static <T extends Comparable<T>> int search(T[] array, T target, int low, int high) {
         if (low > high) {
-            return -1; // Empty range: the name is not present in this section.
+            return -1; // Empty range: the target is not present in this section.
         }
 
         int mid = low + (high - low) / 2; // Avoids overflow compared to (low + high) / 2.
-        int comparison = employees[mid].getName().compareTo(targetName);
+        int comparison = array[mid].compareTo(target);
 
         if (comparison < 0) {
-            // Midpoint name comes before the target: search the right half.
-            return search(employees, targetName, mid + 1, high);
+            // Midpoint comes before the target: search the right half.
+            return search(array, target, mid + 1, high);
         } else if (comparison > 0) {
-            // Midpoint name comes after the target: search the left half.
-            return search(employees, targetName, low, mid - 1);
+            // Midpoint comes after the target: search the left half.
+            return search(array, target, low, mid - 1);
         } else {
             // Match found. Keep searching left so duplicates return the first index.
-            int earlier = search(employees, targetName, low, mid - 1);
+            int earlier = search(array, target, low, mid - 1);
             return (earlier != -1) ? earlier : mid;
         }
     }

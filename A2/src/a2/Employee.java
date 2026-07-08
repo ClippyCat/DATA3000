@@ -1,6 +1,18 @@
 package a2;
 
+import java.util.Comparator;
+
 public class Employee implements Comparable<Employee> {
+
+    /**
+     * Orders employees by calculated hourly salary, ascending. Employee's
+     * natural ordering is by name, so use this comparator (for example with
+     * {@link SelectionSort#sort(Object[], Comparator)}) when a salary ordering
+     * is required.
+     */
+    public static final Comparator<Employee> BY_SALARY =
+            Comparator.comparingDouble(Employee::getCalculatedHourlySalary);
+
     private final int id;
     private final String name;
     private final double hoursWorked;
@@ -70,10 +82,11 @@ public class Employee implements Comparable<Employee> {
     }
 
     /**
-     * Compare by calculated hourly salary only.
+     * Natural ordering is by name, compared case-sensitively with
+     * {@link String#compareTo(String)}. Use {@link #BY_SALARY} for salary order.
      */
     @Override
     public int compareTo(Employee other) {
-        return Double.compare(this.calculatedHourlySalary, other.calculatedHourlySalary);
+        return this.name.compareTo(other.name);
     }
 }
