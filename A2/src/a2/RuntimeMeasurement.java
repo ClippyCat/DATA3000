@@ -5,14 +5,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 
-/**
- * Member 5 – Performance &amp; Output Files.
- *
- * Runs SelectionSort (by salary) and QuickSort (by name) on independent
- * copies of the loaded employee array, measures each algorithm's running
- * time with System.currentTimeMillis(), prints a performance summary to the
- * console, and writes each sorted array out to its own CSV file.
- */
 public final class RuntimeMeasurement {
 
     public static final String SALARY_SORTED_FILE = "sortedemployeeBySalary.csv";
