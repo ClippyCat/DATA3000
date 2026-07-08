@@ -21,6 +21,7 @@ public class Employee implements Comparable<Employee> {
     private final double deductionFederal;
     private final double educationAllowance;
     private double calculatedHourlySalary;
+    private static boolean compareBySalary = true;
 
     public Employee(
             int id,
@@ -81,12 +82,17 @@ public class Employee implements Comparable<Employee> {
         calculatedHourlySalary = grossPay * (1.0 - totalDeductionRate);
     }
 
+    public static void setCompareBySalary(boolean isCompareBySalary) 
+    {
+       compareBySalary = isCompareBySalary;
+    }
+
     /**
      * Natural ordering is by name, compared case-sensitively with
      * {@link String#compareTo(String)}. Use {@link #BY_SALARY} for salary order.
      */
     @Override
     public int compareTo(Employee other) {
-        return this.name.compareTo(other.name);
+        return compareBySalary ? Double.compare(this.calculatedHourlySalary, other.calculatedHourlySalary):this.name.compareToIgnoreCase(other.name);
     }
 }
