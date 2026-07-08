@@ -79,7 +79,7 @@ public class Employee implements Comparable<Employee> {
     public void calcHourlySalary() {
         double grossPay = (hoursWorked * hourlyRate) + educationAllowance;
         double totalDeductionRate = deductionProvince + deductionFederal;
-        calculatedHourlySalary = grossPay * (1.0 - totalDeductionRate);
+        calculatedHourlySalary = grossPay - totalDeductionRate ;
     }
 
     public static void setCompareBySalary(boolean isCompareBySalary) 
