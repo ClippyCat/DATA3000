@@ -1,4 +1,4 @@
-package bst;
+package ADTStack;
 
 /**
  * Binary search tree that stores the calculator's variables.
@@ -35,7 +35,7 @@ public class BinarySearchTree {
         } else if (comparison > 0) {
             node.right = insertNode(node.right, key, value);
         } else {
-            node.value = value;     // key already exists, update the value
+            node.value = value; // key already exists, update the value
         }
         return node;
     }
@@ -60,7 +60,7 @@ public class BinarySearchTree {
                 current = current.right;
             }
         }
-        return null;    // key not found
+        return null; // key not found
     }
 
     /**
@@ -77,7 +77,7 @@ public class BinarySearchTree {
     // Recursive helper for delete.
     private Node deleteNode(Node node, String key) {
         if (node == null) {
-            return null;    // key not found
+            return null; // key not found
         }
 
         int comparison = key.compareTo(node.key);
@@ -88,11 +88,11 @@ public class BinarySearchTree {
         } else {
             // Found the node to delete.
             if (node.left == null && node.right == null) {
-                return null;                // no children
+                return null; // no children
             } else if (node.left == null) {
-                return node.right;          // only a right child
+                return node.right; // only a right child
             } else if (node.right == null) {
-                return node.left;           // only a left child
+                return node.left; // only a left child
             } else {
                 // Two children: copy the smallest key from the right
                 // subtree (in-order successor) into this node, then
@@ -132,10 +132,28 @@ public class BinarySearchTree {
 
     /**
      * Displays the tree in a hierarchical structure.
-     * TODO (Part 3): implement with recursion and StringBuilder,
-     * format ||==> key:value per node.
+     * Uses preorder traversal and indentation to show the tree shape.
      */
     public String displayTree() {
-        return isEmpty() ? "Tree is empty" : "displayTree() not implemented yet (Part 3)";
+        if (isEmpty()) {
+            return "Tree is empty";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        buildDisplay(root, "", sb);
+        return sb.toString();
     }
-}//end BinarySearchTree
+
+    private void buildDisplay(Node node, String indent, StringBuilder sb) {
+        if (node == null) {
+            return;
+        }
+
+        if (sb.length() > 0) {
+            sb.append("\n");
+        }
+        sb.append(indent).append("||==> ").append(node.key).append(":").append(node.value);
+        buildDisplay(node.left, indent + "    ", sb);
+        buildDisplay(node.right, indent + "    ", sb);
+    }
+}// end BinarySearchTree

@@ -1,4 +1,4 @@
-package bst;
+package ADTStack;
 
 /**
  * A node in the BST. Stores one variable (key = name, value = number)
@@ -32,4 +32,4 @@ public class Node {
     public Node getRight() {
         return right;
     }
-}//end Node
+}// end Node
