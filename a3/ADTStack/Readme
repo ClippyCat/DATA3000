@@ -1,0 +1,26 @@
+Assignment 3: Stack-Based Postfix Calculator with BST
+
+This program evaluates postfix arithmetic expressions using an array-based stack.
+It also stores variables and values using a binary search tree.
+
+How to compile:
+javac ADTStack\*.java
+
+How to run:
+java ADTStack.Main
+
+Main files:
+- StackInterface.java: defines the stack operations.
+- ArrayStack.java: implements the stack using an array.
+- BinarySearchTree.java: stores variables and values.
+- Node.java: represents one BST node.
+- PostfixCalculator.java: evaluates postfix expressions.
+- Main.java: runs the sample test cases.
+- ArrayStackTest.java: tests the stack.
+- BinarySearchTreeTest.java: tests the BST.
+
+Edge cases tested:
+- Empty expression
+- Unknown variable
+- Division by zero
+- Malformed token
