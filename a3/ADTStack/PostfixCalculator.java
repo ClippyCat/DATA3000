@@ -1,129 +1,155 @@
 package ADTStack;
 
-public class PostfixCalculator
-{
+import java.util.EmptyStackException;
 
-	private BinarySearchTree binarySearchTree;
-	private StackInterface<Integer> stack;
+public class PostfixCalculator {
 
-	public PostfixCalculator() 
-	{
+    private BinarySearchTree binarySearchTree;
+    private StackInterface<Integer> stack;
 
-		binarySearchTree = new BinarySearchTree();
-		stack = new ArrayStack<>();
-	}
+    public PostfixCalculator() {
+        binarySearchTree = new BinarySearchTree();
+        stack = new ArrayStack<>();
+    }
 
-	// Assign the value for keys in BinarySearchTree
-	public void setVariable(String key, int value)
-	{
+    // Assign a value to a variable in the Binary Search Tree.
+    public void setVariable(String key, int value) {
+        if (!isVariable(key)) {
+            throw new IllegalArgumentException("Invalid variable name: " + key);
+        }
 
-		binarySearchTree.insert(key, value);
-	}
+        binarySearchTree.insert(key, value);
+    }
 
-	// Clear the binary search tree nodes.
-	public void deleteAllVariables() 
-	{
+    // Clear all variables from the Binary Search Tree.
+    public void deleteAllVariables() {
+        binarySearchTree.deleteAll();
+    }
 
-		binarySearchTree.deleteAll();
-	}
+    // Return the Binary Search Tree as a String so Main can display it.
+    public String displayVariables() {
+        return binarySearchTree.displayTree();
+    }
 
-	// Display the binary tree
-	public void displayVariables() 
-	{
+    // Evaluates a postfix expression and returns the final integer result.
+    public int evaluatePostfixExpression(String expression) {
 
-		binarySearchTree.displayTree();
-	}
+        stack.clear();
 
-	// Evaluates a postfix expression.
-	public int evaluatePostfixExpression(String expression)
-	{
+        // Edge case: empty or null expression.
+        if (expression == null || expression.trim().isEmpty()) {
+            throw new IllegalArgumentException("Expression cannot be empty.");
+        }
 
-		stack.clear();
+        // Split by one or more spaces so extra spaces do not create empty tokens.
+        String[] tokens = expression.trim().split("\\s+");
 
-		String[] tokens = expression.split(" ");
+        for (int i = 0; i < tokens.length; i++) {
 
-		for (int i = 0; i < tokens.length; i++) 
-		{
+            String token = tokens[i];
 
-			if (isNumber(tokens[i]))
-			{
+            if (isNumber(token)) {
 
-				int value = Integer.parseInt(tokens[i]);
+                int value = Integer.parseInt(token);
+                stack.push(value);
 
-				stack.push(value);
-			}
+            } else if (isOperator(token)) {
 
-			else if (isOperator(tokens[i])) 
-			{
+                int operand2;
+                int operand1;
 
-				int operand2 = stack.pop();
-				int operand1 = stack.pop();
+                // Edge case: operator appears without enough operands.
+                try {
+                    operand2 = stack.pop();
+                    operand1 = stack.pop();
+                } catch (EmptyStackException e) {
+                    throw new IllegalArgumentException(
+                            "Malformed expression: not enough operands for operator " + token);
+                }
 
-				int result = 0;
+                int result = calculate(operand1, operand2, token);
+                stack.push(result);
 
-				switch (tokens[i]) {
+            } else if (isVariable(token)) {
 
-				case "+":
-					result = operand1 + operand2;
-					break;
+                Integer value = binarySearchTree.search(token);
 
-				case "-":
-					result = operand1 - operand2;
-					break;
+                // Edge case: variable was not stored in the BST.
+                if (value == null) {
+                    throw new IllegalArgumentException("Variable " + token + " not found.");
+                }
 
-				case "*":
-					result = operand1 * operand2;
-					break;
+                stack.push(value);
 
-				case "/":
+            } else {
 
-					if (operand2 == 0)
-						throw new ArithmeticException("Division by zero");
+                // Edge case: token is not a number, operator, or valid variable name.
+                throw new IllegalArgumentException("Malformed token found: " + token);
+            }
+        }
 
-					result = operand1 / operand2;
-					break;
-				}
+        int finalResult;
 
-				stack.push(result);
-			}
+        try {
+            finalResult = stack.pop();
+        } catch (EmptyStackException e) {
+            throw new IllegalArgumentException("Malformed expression: no result found.");
+        }
 
-			else
-			{
+        // Edge case: extra numbers or variables were left unused.
+        if (!stack.isEmpty()) {
+            throw new IllegalArgumentException("Malformed expression: too many operands.");
+        }
 
-				Integer value = binarySearchTree.search(tokens[i]);
+        return finalResult;
+    }
 
-				if (value == null)
-					throw new RuntimeException("Variable " + tokens[i] + " not found.");
+    // Performs one arithmetic operation.
+    private int calculate(int operand1, int operand2, String operator) {
 
-				stack.push(value);
-			}
-		}
+        switch (operator) {
 
-		return stack.pop();
-	}
+            case "+":
+                return operand1 + operand2;
 
-	// Method checks the passed argument is number or not
-	private boolean isNumber(String token)
-	{
+            case "-":
+                return operand1 - operand2;
 
-		try
-      {
+            case "*":
+                return operand1 * operand2;
 
-			Integer.parseInt(token);
+            case "/":
+                if (operand2 == 0) {
+                    throw new ArithmeticException("Division by zero is not allowed.");
+                }
+                return operand1 / operand2;
 
-			return true;
+            default:
+                throw new IllegalArgumentException("Invalid operator: " + operator);
+        }
+    }
 
-		} catch (Exception e) 
-		{
+    // Checks if the token is an integer number.
+    private boolean isNumber(String token) {
 
-			return false;
-		}
-	}
+        try {
+            Integer.parseInt(token);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 
-	// Method checks the passed argument is operator or not
-	private boolean isOperator(String token)
-	{
+    // Checks if the token is one of the allowed operators.
+    private boolean isOperator(String token) {
+        return token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/");
+    }
 
+    // Checks if the token is a valid variable name.
+    private boolean isVariable(String token) {
+        return token != null && token.matches("[a-zA-Z][a-zA-Z0-9_]*");
+    }
+}
 		return token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/");
 	}
 }
