@@ -150,6 +150,3 @@ public class PostfixCalculator {
         return token != null && token.matches("[a-zA-Z][a-zA-Z0-9_]*");
     }
 }
-		return token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/");
-	}
-}
