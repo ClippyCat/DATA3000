@@ -39,8 +39,12 @@ public class Main {
         message.append("Postfix expression ").append(caseNumber).append(": ").append(expression).append("\n\n");
         message.append("Binary Search Tree:\n").append(calculator.displayVariables()).append("\n");
 
-        int result = calculator.evaluatePostfixExpression(expression);
-        message.append("Result: ").append(result).append("\n");
+        try {
+            int result = calculator.evaluatePostfixExpression(expression);
+            message.append("Result: ").append(result).append("\n");
+        } catch (IllegalArgumentException | ArithmeticException ex) {
+            message.append("Error: ").append(ex.getMessage()).append("\n");
+        }
 
         calculator.deleteAllVariables();
         message.append("\nAll variables deleted from the tree.");
