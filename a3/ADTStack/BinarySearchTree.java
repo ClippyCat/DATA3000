@@ -149,11 +149,13 @@ public class BinarySearchTree {
             return;
         }
 
+        buildDisplay(node.right, indent + "    ", sb); // right first (deeper indent)
+
         if (sb.length() > 0) {
             sb.append("\n");
         }
         sb.append(indent).append("||==> ").append(node.key).append(":").append(node.value);
-        buildDisplay(node.left, indent + "    ", sb);
-        buildDisplay(node.right, indent + "    ", sb);
+
+        buildDisplay(node.left, indent + "    ", sb); // then left
     }
 }// end BinarySearchTree
