@@ -1,3 +1,5 @@
+package fcfs.adt;
+
 /**
  * Represents a generic queue interface.
  *

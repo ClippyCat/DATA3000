@@ -1,5 +1,4 @@
-
-package FCFS;
+package fcfs.model;
 
 /**
  * Represents a process used in the FCFS scheduling algorithm.
