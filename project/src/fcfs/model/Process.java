@@ -9,13 +9,7 @@ public class Process {
     private int arrivalTime;
     private int burstTime;
 
-    // Scheduling results calculated by FCFSAlgorithm.
-    private int startTime;
-    private int completionTime;
-    private int waitingTime;
-    private int turnaroundTime;
-
-    
+      
     /* Creates a process using its basic scheduling information.*/
        
      
@@ -67,37 +61,7 @@ public class Process {
         this.burstTime = burstTime;
     }
 
-    public int getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(int startTime) {
-        this.startTime = startTime;
-    }
-
-    public int getCompletionTime() {
-        return completionTime;
-    }
-
-    public void setCompletionTime(int completionTime) {
-        this.completionTime = completionTime;
-    }
-
-    public int getWaitingTime() {
-        return waitingTime;
-    }
-
-    public void setWaitingTime(int waitingTime) {
-        this.waitingTime = waitingTime;
-    }
-
-    public int getTurnaroundTime() {
-        return turnaroundTime;
-    }
-
-    public void setTurnaroundTime(int turnaroundTime) {
-        this.turnaroundTime = turnaroundTime;
-    }
+  
         @Override
     public String toString() {
         return processID + " Arrival=" + arrivalTime +
