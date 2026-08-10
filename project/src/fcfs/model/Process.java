@@ -98,4 +98,9 @@ public class Process {
     public void setTurnaroundTime(int turnaroundTime) {
         this.turnaroundTime = turnaroundTime;
     }
+        @Override
+    public String toString() {
+        return processID + " Arrival=" + arrivalTime +
+               " Burst=" + burstTime;
+    }
 }
