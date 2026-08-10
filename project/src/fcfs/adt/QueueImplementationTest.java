@@ -54,6 +54,15 @@ public class QueueImplementationTest {
             testGetFrontReturnsOnlyEntry();
             testGetFrontReturnsFirstEntry();
             testGetFrontDoesNotConsume();
+            testIsEmptyOnNewQueue();
+            testIsEmptyAfterEnqueue();
+            testDequeueOnEmptyThrows();
+            testDequeueReturnsFrontEntry();
+            testDequeueFollowsFifoOrder();
+            testDequeueUpdatesIsEmpty();
+            testEnqueueAfterDrainingWorks();
+            testClearEmptiesQueue();
+            testClearOnAlreadyEmptyQueue();
         } catch (RuntimeException e) {
             // A test that throws is a failure, not a reason to skip the summary.
             failed++;
@@ -119,5 +128,96 @@ public class QueueImplementationTest {
         String secondRead = queue.getFront();
         check("two consecutive getFront calls return the same entry",
               "P1".equals(firstRead) && firstRead.equals(secondRead));
+    }
+    // Part 3 tests: isEmpty, dequeue, clear
+
+    // new queue should start empty
+    private static void testIsEmptyOnNewQueue() {
+        QueueImplementation<String> queue = new QueueImplementation<>();
+        check("isEmpty is true on a brand new queue",
+              queue.isEmpty());
+    }
+
+    // adding something means it's not empty anymore
+    private static void testIsEmptyAfterEnqueue() {
+        QueueImplementation<String> queue = new QueueImplementation<>();
+        queue.enqueue("P1");
+        check("isEmpty is false after one enqueue",
+              !queue.isEmpty());
+    }
+
+    // can't dequeue from an empty queue
+    private static void testDequeueOnEmptyThrows() {
+        QueueImplementation<String> queue = new QueueImplementation<>();
+        try {
+            queue.dequeue();
+            check("dequeue on an empty queue throws IllegalStateException", false);
+        } catch (IllegalStateException e) {
+            check("dequeue on an empty queue throws IllegalStateException", true);
+        }
+    }
+
+    // dequeue should give back whatever was at the front
+    private static void testDequeueReturnsFrontEntry() {
+        QueueImplementation<String> queue = new QueueImplementation<>();
+        queue.enqueue("P1");
+        queue.enqueue("P2");
+        check("dequeue returns the entry that was at the front",
+              "P1".equals(queue.dequeue()));
+    }
+
+    // make sure it's actually FIFO order, not LIFO or random
+    private static void testDequeueFollowsFifoOrder() {
+        QueueImplementation<String> queue = new QueueImplementation<>();
+        queue.enqueue("P1");
+        queue.enqueue("P2");
+        queue.enqueue("P3");
+
+        String d1 = queue.dequeue();
+        String d2 = queue.dequeue();
+        String d3 = queue.dequeue();
+
+        check("three dequeues return entries in FIFO order",
+              "P1".equals(d1) && "P2".equals(d2) && "P3".equals(d3));
+    }
+
+    // dequeuing everything should bring isEmpty back to true
+    private static void testDequeueUpdatesIsEmpty() {
+        QueueImplementation<String> queue = new QueueImplementation<>();
+        queue.enqueue("P1");
+        queue.enqueue("P2");
+        queue.dequeue();
+        queue.dequeue();
+        check("isEmpty is true after dequeuing every entry",
+              queue.isEmpty());
+    }
+
+    // edge case: enqueue right after draining the queue should still work
+    private static void testEnqueueAfterDrainingWorks() {
+        QueueImplementation<String> queue = new QueueImplementation<>();
+        queue.enqueue("P1");
+        queue.dequeue();
+        queue.enqueue("P2");
+        check("enqueue works correctly after the queue has been fully drained",
+              "P2".equals(queue.getFront()));
+    }
+
+    // clear should empty out a queue that has stuff in it
+    private static void testClearEmptiesQueue() {
+        QueueImplementation<String> queue = new QueueImplementation<>();
+        queue.enqueue("P1");
+        queue.enqueue("P2");
+        queue.enqueue("P3");
+        queue.clear();
+        check("isEmpty is true after clear on a non-empty queue",
+              queue.isEmpty());
+    }
+
+    // clear on an already empty queue shouldn't break anything
+    private static void testClearOnAlreadyEmptyQueue() {
+        QueueImplementation<String> queue = new QueueImplementation<>();
+        queue.clear();
+        check("clear on an already-empty queue does not throw and stays empty",
+              queue.isEmpty());
     }
 }// end QueueImplementationTest

@@ -65,36 +65,35 @@ public class QueueImplementation<T> implements QueueInterface<T> {
         return front.getData();
     }
 
-    /**
-     * Removes and returns the entry at the front of the queue.
-     *
-     * @return The object at the front of the queue.
-     * @throws IllegalStateException if the queue is empty before the operation.
-     */
+    // Removes and returns the entry at the front of the queue.
+    // Throws IllegalStateException if the queue is empty.
     @Override
     public T dequeue() {
-        // Part 3 implements this. Throwing keeps a premature call loud rather
-        // than letting a placeholder value produce a silently wrong result.
-        throw new UnsupportedOperationException("Part 3: dequeue not yet implemented.");
+        if (isEmpty()) {
+            throw new IllegalStateException("Cannot dequeue from an empty queue.");
+        }
+
+        T frontData = front.getData();
+        front = front.getNext();
+
+        // if we just removed the last node, back needs to be reset too
+        if (front == null) {
+            back = null;
+        }
+
+        return frontData;
     }
 
-    /**
-     * Checks whether the queue is empty.
-     *
-     * @return True if the queue is empty, false otherwise.
-     */
+    // Returns true if the queue has no entries in it.
     @Override
     public boolean isEmpty() {
-        // Part 3 implements this.
-        throw new UnsupportedOperationException("Part 3: isEmpty not yet implemented.");
+        return front == null;
     }
 
-    /**
-     * Removes all entries from the queue.
-     */
+    // Removes every entry from the queue.
     @Override
     public void clear() {
-        // Part 3 implements this.
-        throw new UnsupportedOperationException("Part 3: clear not yet implemented.");
+        front = null;
+        back = null;
     }
 }// end QueueImplementation
