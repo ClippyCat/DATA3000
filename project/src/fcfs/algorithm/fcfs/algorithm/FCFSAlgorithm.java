@@ -155,4 +155,47 @@ public class FCFSAlgorithm {
     public Process[] getScheduledProcesses() {
         return scheduledProcesses;
     }
+
+    /**
+     * Calculates the average waiting time across all scheduled processes.
+     *
+     * Must be called after simulate(), since it relies on the waiting time
+     * already having been calculated and stored on each process.
+     *
+     * @return The average waiting time, or 0 if no processes have been scheduled.
+     */
+    public double calculateAverageWaitingTime() {
+        if (scheduledProcesses == null || scheduledProcesses.length == 0) {
+            return 0;
+        }
+
+        int totalWaitingTime = 0;
+        for (int i = 0; i < scheduledProcesses.length; i++) {
+            totalWaitingTime += scheduledProcesses[i].getWaitingTime();
+        }
+
+        return (double) totalWaitingTime / scheduledProcesses.length;
+    }
+
+    /**
+     * Calculates the average turnaround time across all scheduled processes.
+     *
+     * Must be called after simulate(), since it relies on the turnaround time
+     * already having been calculated and stored on each process.
+     *
+     * @return The average turnaround time, or 0 if no processes have been
+     *         scheduled.
+     */
+    public double calculateAverageTurnaroundTime() {
+        if (scheduledProcesses == null || scheduledProcesses.length == 0) {
+            return 0;
+        }
+
+        int totalTurnaroundTime = 0;
+        for (int i = 0; i < scheduledProcesses.length; i++) {
+            totalTurnaroundTime += scheduledProcesses[i].getTurnaroundTime();
+        }
+
+        return (double) totalTurnaroundTime / scheduledProcesses.length;
+    }
 }
