@@ -2,6 +2,8 @@ package fcfs.app;
 
 import fcfs.model.Process;
 
+import java.util.Scanner;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -25,11 +27,13 @@ public class InputCollector {
         JOptionPane.showMessageDialog(null,
                 "the FCFS (First-Come-First-Serve) Scheduling Simulation!\n\nPress OK to Start",
                 "Welcome to", JOptionPane.INFORMATION_MESSAGE);
+        Scanner scanner = new Scanner(System.in);
 
         // Ask for the number of processes, repeating until the value is valid.
         int count = 0;
         while (true) {
-            String input = JOptionPane.showInputDialog(null, "Enter the number of processes ►");
+        	System.out.print("Enter the number of processes ► ");
+            String input = scanner.next();
             if (input == null) {
                 return null;                    // Cancel or window closed
             }
@@ -44,7 +48,7 @@ public class InputCollector {
                 showError("Please enter a valid whole number.");
             }
         }
-
+        
         Process[] processes = new Process[count];
         for (int i = 0; i < count; i++) {
             String id = "P" + (i + 1);          // auto-label P1..Pn
@@ -52,8 +56,8 @@ public class InputCollector {
             // Ask for the arrival time (cannot be negative).
             int arrival = 0;
             while (true) {
-                String input = JOptionPane.showInputDialog(null,
-                        "Enter arrival time for process " + id + " ►");
+            	System.out.print("Enter arrival time for process " + (i+1) + " ► ");
+            	String input = scanner.next();
                 if (input == null) {
                     return null;
                 }
@@ -72,8 +76,8 @@ public class InputCollector {
             // Ask for the burst time (must be greater than 0).
             int burst = 0;
             while (true) {
-                String input = JOptionPane.showInputDialog(null,
-                        "Enter burst time for process " + id + " ►");
+            	System.out.print("Enter burst time for process " + (i+1) + " ► ");
+            	String input = scanner.next();
                 if (input == null) {
                     return null;
                 }
