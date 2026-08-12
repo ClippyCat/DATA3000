@@ -84,9 +84,17 @@ public class FCFSAlgorithm {
             // Completion time is start time plus burst time.
             int completionTime = startTime + currentProcess.getBurstTime();
 
-            // Store the calculated start and completion times in the process.
+            // Waiting time is how long the process waits before it starts.
+            int waitingTime = startTime - currentProcess.getArrivalTime();
+
+            // Turnaround time is total time in the system: completion minus arrival.
+            int turnaroundTime = completionTime - currentProcess.getArrivalTime();
+
+            // Store the calculated scheduling values in the process.
             currentProcess.setStartTime(startTime);
             currentProcess.setCompletionTime(completionTime);
+            currentProcess.setWaitingTime(waitingTime);
+            currentProcess.setTurnaroundTime(turnaroundTime);
 
             // Save this process in execution order.
             scheduledProcesses[index] = currentProcess;

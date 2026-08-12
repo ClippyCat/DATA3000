@@ -1,0 +1,9 @@
+c:\Projects\DATA3000\project\src\fcfs\adt\Node.java
+c:\Projects\DATA3000\project\src\fcfs\adt\QueueImplementation.java
+c:\Projects\DATA3000\project\src\fcfs\adt\QueueImplementationTest.java
+c:\Projects\DATA3000\project\src\fcfs\adt\QueueInterface.java
+c:\Projects\DATA3000\project\src\fcfs\algorithm\fcfs\algorithm\FCFSAlgorithm.java
+c:\Projects\DATA3000\project\src\fcfs\app\InputCollector.java
+c:\Projects\DATA3000\project\src\fcfs\app\Main.java
+c:\Projects\DATA3000\project\src\fcfs\app\ResultDisplay.java
+c:\Projects\DATA3000\project\src\fcfs\model\Process.java
