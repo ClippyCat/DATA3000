@@ -87,6 +87,16 @@ public class FCFSAlgorithm {
             // Store the calculated start and completion times in the process.
             currentProcess.setStartTime(startTime);
             currentProcess.setCompletionTime(completionTime);
+            
+            int waitingTime =
+                    currentTime - currentProcess.getArrivalTime();
+            currentTime += currentProcess.getBurstTime();
+            
+            int turnaroundTime =
+                    currentTime - currentProcess.getArrivalTime();
+
+            currentProcess.setWaitingTime(waitingTime);
+            currentProcess.setTurnaroundTime(turnaroundTime);
 
             // Save this process in execution order.
             scheduledProcesses[index] = currentProcess;
